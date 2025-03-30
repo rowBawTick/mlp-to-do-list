@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Usernotnull\Toast\Concerns\WireToast;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
@@ -10,6 +11,8 @@ use Livewire\Attributes\Validate;
 
 class TaskList extends Component
 {
+    use WireToast;
+
     /**
      * The new task description.
      */
@@ -38,7 +41,7 @@ class TaskList extends Component
             $this->tasks = Task::orderBy('created_at', 'desc')->get();
         } catch (\Exception $e) {
             Log::error('Failed to retrieve tasks: ' . $e->getMessage());
-            $this->dispatch('notify', type: 'error', message: 'Could not load tasks.');
+            toast()->danger('Could not load tasks.')->push();
         }
     }
 
@@ -57,10 +60,10 @@ class TaskList extends Component
             $this->description = '';
             $this->loadTasks();
 
-            $this->dispatch('notify', type: 'success', message: 'Task created successfully!');
+            toast()->success('Task created successfully!')->push();
         } catch (\Exception $e) {
             Log::error('Failed to create task: ' . $e->getMessage());
-            $this->dispatch('notify', type: 'error', message: 'Failed to create task. Please try again.');
+            toast()->danger('Failed to create task. Please try again.')->push();
         }
     }
 
@@ -73,14 +76,10 @@ class TaskList extends Component
             $task = Task::findOrFail($taskId);
             $task->completed = !$task->completed;
             $task->save();
-
             $this->loadTasks();
-
-            $status = $task->completed ? 'completed' : 'reopened';
-            $this->dispatch('notify', type: 'success', message: "Task {$status} successfully!");
         } catch (\Exception $e) {
             Log::error("Failed to update task status for task ID {$taskId}: " . $e->getMessage());
-            $this->dispatch('notify', type: 'error', message: 'Failed to update task status. Please try again.');
+            toast()->danger('Failed to update task status. Please try again.')->push();
         }
     }
 
@@ -92,13 +91,12 @@ class TaskList extends Component
         try {
             $task = Task::findOrFail($taskId);
             $task->delete();
-
             $this->loadTasks();
 
-            $this->dispatch('notify', type: 'success', message: 'Task deleted successfully!');
+            toast()->success('Task deleted successfully!')->push();
         } catch (\Exception $e) {
             Log::error("Failed to delete task ID {$taskId}: " . $e->getMessage());
-            $this->dispatch('notify', type: 'error', message: 'Failed to delete task. Please try again.');
+            toast()->danger('Failed to delete task. Please try again.')->push();
         }
     }
 

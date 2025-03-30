@@ -24,6 +24,8 @@
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
+    <livewire:toasts />
+
     <div class="w-[90%] mx-auto py-8 max-w-[1400px]">
         <!-- Logo Section -->
         <div class="flex justify-start mb-8">
