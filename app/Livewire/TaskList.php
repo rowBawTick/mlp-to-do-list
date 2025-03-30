@@ -71,13 +71,13 @@ class TaskList extends Component
     {
         try {
             $task = Task::findOrFail($taskId);
-            $task->update([
-                'completed' => !$task->completed
-            ]);
+            $task->completed = !$task->completed;
+            $task->save();
 
             $this->loadTasks();
 
-            $this->dispatch('notify', type: 'success', message: 'Task status updated!');
+            $status = $task->completed ? 'completed' : 'reopened';
+            $this->dispatch('notify', type: 'success', message: "Task {$status} successfully!");
         } catch (\Exception $e) {
             Log::error("Failed to update task status for task ID {$taskId}: " . $e->getMessage());
             $this->dispatch('notify', type: 'error', message: 'Failed to update task status. Please try again.');

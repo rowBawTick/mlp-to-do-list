@@ -19,12 +19,12 @@
                         {{ $task->description }}
                     </div>
 
-                    @if(!$task->completed)
-                        <div class="w-24 flex justify-end space-x-2">
+                    <div class="w-24 flex justify-end space-x-2">
+                        @if(!$task->completed)
                             <!-- Complete Task Button -->
                             <button
                                 wire:click="toggleComplete({{ $task->id }})"
-                                class="text-green-500 hover:text-green-700"
+                                class="text-green-500 hover:text-green-700 focus:outline-none"
                                 title="Mark as completed"
                             >
                                 <x-heroicon-o-check-circle class="h-5 w-5" />
@@ -33,13 +33,22 @@
                             <!-- Delete Task Button -->
                             <button
                                 wire:click="deleteTask({{ $task->id }})"
-                                class="text-red-500 hover:text-red-700"
+                                class="text-red-500 hover:text-red-700 focus:outline-none"
                                 title="Delete task"
                             >
                                 <x-heroicon-o-x-circle class="h-5 w-5" />
                             </button>
-                        </div>
-                    @endif
+                        @else
+                            <!-- Reopen Task Button -->
+                            <button
+                                wire:click="toggleComplete({{ $task->id }})"
+                                class="text-blue-500 hover:text-blue-700 focus:outline-none"
+                                title="Reopen task"
+                            >
+                                <x-heroicon-o-arrow-path class="h-5 w-5" />
+                            </button>
+                        @endif
+                    </div>
                 </div>
             @endforeach
         </div>

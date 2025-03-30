@@ -24,7 +24,7 @@
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
-    <div class="w-[60%] mx-auto py-8 max-w-[1400px]">
+    <div class="w-[90%] mx-auto py-8 max-w-[1400px]">
         <!-- Logo Section -->
         <div class="flex justify-start mb-8">
             <img src="{{ asset('logo.png') }}" class="h-16" alt="MLP Logo">
