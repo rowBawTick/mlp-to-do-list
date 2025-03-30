@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -16,43 +15,60 @@ class TaskController extends Controller
      */
     public function index(): View
     {
-        $tasks = Task::orderBy('created_at', 'desc')->get();
-        return view('tasks', compact('tasks'));
+        try {
+            $tasks = Task::orderBy('created_at', 'desc')->get();
+            return view('tasks', compact('tasks'));
+        } catch (\Exception $e) {
+            Log::error('Failed to retrieve tasks: ' . $e->getMessage());
+            return view('tasks', ['tasks' => collect()])->with('error', 'Could not load tasks.');
+        }
     }
 
     /**
      * Store a newly created task in storage.
      */
-    public function store(Request $request): Application|Redirector|RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'description' => 'required',
+            'description' => 'required|string',
         ]);
 
-        Task::create($validated);
-
-        return redirect('/')->with('success', 'Task created successfully!');
+        try {
+            Task::create($validated);
+            return redirect('/')->with('success', 'Task created successfully!');
+        } catch (\Exception $e) {
+            Log::error('Failed to create task: ' . $e->getMessage());
+            return back()->withInput()->with('error', 'Failed to create task. Please try again.');
+        }
     }
 
     /**
      * Update the specified task's completion status.
      */
-    public function toggleComplete(Task $task): Application|Redirector|RedirectResponse
+    public function toggleComplete(Task $task): RedirectResponse
     {
-        $task->update([
-            'completed' => !$task->completed
-        ]);
-
-        return redirect('/')->with('success', 'Task status updated!');
+        try {
+            $task->update([
+                'completed' => !$task->completed
+            ]);
+            return redirect('/')->with('success', 'Task status updated!');
+        } catch (\Exception $e) {
+            Log::error("Failed to update task status for task ID {$task->id}: " . $e->getMessage());
+            return back()->with('error', 'Failed to update task status. Please try again.');
+        }
     }
 
     /**
      * Remove the specified task from storage.
      */
-    public function destroy(Task $task): Application|Redirector|RedirectResponse
+    public function destroy(Task $task): RedirectResponse
     {
-        $task->delete();
-
-        return redirect('/')->with('success', 'Task deleted successfully!');
+        try {
+            $task->delete();
+            return redirect('/')->with('success', 'Task deleted successfully!');
+        } catch (\Exception $e) {
+            Log::error("Failed to delete task ID {$task->id}: " . $e->getMessage());
+            return back()->with('error', 'Failed to delete task. Please try again.');
+        }
     }
 }
