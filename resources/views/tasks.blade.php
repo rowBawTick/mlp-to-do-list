@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
+    <!-- Livewire Styles -->
+    @livewireStyles
+
     <style>
         body {
             font-family: 'Lato', sans-serif;
@@ -21,17 +24,17 @@
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
-    <div class="w-[90%] mx-auto py-8 max-w-[1400px]">
+    <div class="w-[60%] mx-auto py-8 max-w-[1400px]">
         <!-- Logo Section -->
         <div class="flex justify-start mb-8">
             <img src="{{ asset('logo.png') }}" class="h-16" alt="MLP Logo">
         </div>
 
-        <!-- Main Content -->
-        <div class="flex flex-col md:flex-row gap-8 items-start">
-            @include('partials.task-form')
-            @include('partials.task-list')
-        </div>
+        <!-- Livewire Component -->
+        @livewire('task-list')
     </div>
+
+    <!-- Livewire Scripts -->
+    @livewireScripts
 </body>
 </html>

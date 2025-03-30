@@ -1,4 +1,4 @@
-<!-- Right Side - Task List (2/3 width) -->
+<!-- Right Side - Task List -->
 <div class="w-full md:w-2/3 bg-white rounded-lg shadow p-6">
     <h2 class="text-xl font-semibold mb-4">Your Tasks</h2>
 
@@ -22,22 +22,22 @@
                     @if(!$task->completed)
                         <div class="w-24 flex justify-end space-x-2">
                             <!-- Complete Task Button -->
-                            <form action="{{ route('tasks.toggle', $task->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit" class="text-green-500 hover:text-green-700">
-                                    <x-heroicon-o-check-circle class="h-5 w-5" />
-                                </button>
-                            </form>
+                            <button
+                                wire:click="toggleComplete({{ $task->id }})"
+                                class="text-green-500 hover:text-green-700"
+                                title="Mark as completed"
+                            >
+                                <x-heroicon-o-check-circle class="h-5 w-5" />
+                            </button>
 
                             <!-- Delete Task Button -->
-                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-700">
-                                    <x-heroicon-o-x-circle class="h-5 w-5" />
-                                </button>
-                            </form>
+                            <button
+                                wire:click="deleteTask({{ $task->id }})"
+                                class="text-red-500 hover:text-red-700"
+                                title="Delete task"
+                            >
+                                <x-heroicon-o-x-circle class="h-5 w-5" />
+                            </button>
                         </div>
                     @endif
                 </div>
