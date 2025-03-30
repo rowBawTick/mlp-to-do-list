@@ -1,1 +1,2 @@
-require('./bootstrap');
+// Import any JS dependencies
+import './bootstrap';
