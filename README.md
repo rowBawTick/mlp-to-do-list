@@ -1,5 +1,7 @@
 ## MLP To-Do List Application
 
+Note there is another branch "livewire" where I use livewire for responsiveness.
+
 ### System Requirements
 
 - **PHP**: ^8.2
