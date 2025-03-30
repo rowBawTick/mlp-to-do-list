@@ -26,8 +26,7 @@ class TaskController extends Controller
     public function store(Request $request): Application|Redirector|RedirectResponse
     {
         $validated = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'nullable',
+            'description' => 'required',
         ]);
 
         Task::create($validated);
