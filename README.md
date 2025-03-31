@@ -4,16 +4,10 @@
 
 - **PHP**: ^8.2
 - **MySQL**: 5.7+ or MariaDB 10.3+
-- **Node.js**: 14.0+ (for frontend assets)
-- **Composer**: 2.0+
-- **npm**: 6.0+
 
 #### Laravel Version
 - Laravel 12.0
 - Livewire (for dynamic components)
-- Alpine.js (for client-side interactivity)
-- TailwindCSS (for styling)
-- Blade Heroicons (for icons)
 
 ### How to Run the Application
 
