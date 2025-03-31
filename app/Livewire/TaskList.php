@@ -53,12 +53,13 @@ class TaskList extends Component
         $this->validate();
 
         try {
-            Task::create([
+            $task = Task::create([
                 'description' => $this->description
             ]);
 
             $this->description = '';
-            $this->loadTasks();
+            // Add the new task to the beginning of the collection
+            $this->tasks->prepend($task);
 
             toast()->success('Task created successfully!')->push();
         } catch (\Exception $e) {
@@ -76,7 +77,11 @@ class TaskList extends Component
             $task = Task::findOrFail($taskId);
             $task->completed = !$task->completed;
             $task->save();
-            $this->loadTasks();
+
+            // Update the task in the collection
+            $this->tasks = $this->tasks->map(function ($item) use ($task) {
+                return $item->id === $task->id ? $task : $item;
+            });
         } catch (\Exception $e) {
             Log::error("Failed to update task status for task ID {$taskId}: " . $e->getMessage());
             toast()->danger('Failed to update task status. Please try again.')->push();
@@ -91,7 +96,11 @@ class TaskList extends Component
         try {
             $task = Task::findOrFail($taskId);
             $task->delete();
-            $this->loadTasks();
+
+            // Remove the task from the collection
+            $this->tasks = $this->tasks->filter(function ($item) use ($taskId) {
+                return $item->id !== $taskId;
+            });
 
             toast()->success('Task deleted successfully!')->push();
         } catch (\Exception $e) {
