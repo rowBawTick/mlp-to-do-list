@@ -20,9 +20,11 @@
         <button
             type="submit"
             class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md
-                   transition duration-200"
+                   transition duration-200 flex items-center justify-center"
+            wire:loading.attr="disabled"
         >
-            Add
+            <span wire:loading.remove>Add</span>
+            <flux:icon.loading wire:loading class="h-5 w-5 text-white" theme="light" />
         </button>
     </form>
 </div>
