@@ -63,6 +63,11 @@
 9. **Access the application**
    - Open your browser and navigate to: `http://localhost:8000`
 
+10. **Run tests**
+   ```bash
+   php artisan test
+   ```
+
 ---
 
 ## MLP To-DO - Instructions
