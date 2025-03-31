@@ -64,7 +64,12 @@ Note there is another branch "livewire" where I use livewire for responsiveness.
 9. **Access the application**
    - Open your browser and navigate to: `http://localhost:8000`
 
----
+### How to Run Tests
+
+10. **Run tests**
+   ```bash
+   php artisan test
+   ```
 
 ## MLP To-DO - Instructions
 
