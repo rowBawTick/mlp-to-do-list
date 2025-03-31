@@ -71,6 +71,8 @@ Note there is another branch "livewire" where I use livewire for responsiveness.
    php artisan test
    ```
 
+---
+
 ## MLP To-DO - Instructions
 
 You must demonstrate the following abilities/skills: make models, controllers, migrations, HTML, CSS, blade, Git commits, blade templates, etc. 
