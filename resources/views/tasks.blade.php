@@ -13,7 +13,8 @@
 
     <!-- Livewire Styles -->
     @livewireStyles
-
+    <!-- Livewire Flux UI (dark theme) -->
+{{--    @fluxAppearance--}}
     <style>
         body {
             font-family: 'Lato', sans-serif;
@@ -38,5 +39,7 @@
 
     <!-- Livewire Scripts -->
     @livewireScripts
+    <!-- Livewire Flux UI Scripts-->
+    @fluxScripts
 </body>
 </html>
